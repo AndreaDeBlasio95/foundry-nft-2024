@@ -1,66 +1,42 @@
-## Foundry
+forge init
+forge install OpenZeppelin/openzeppelin-contracts --no-commit
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+in foundry.toml:
+remappings = ["@openzeppelin/contracts=lib/openzeppelin-contracts/contracts']
 
-Foundry consists of:
+info:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+1. URI: Uniform Resource Identifier -> Identifies the resource by name at the specified location or URL
+2. URL: Uniform Resource Locator -> Location of the Resource
 
-## Documentation
+Compare two strings in solidity:
+use abi.encodePacked("stringHere") with keccak256
+assert(keccak256(abi.encodePacked(expectedName)) == keccak256(abi.encodePacked(actualName)));
 
-https://book.getfoundry.sh/
+Run a specific test
+forge test --mt testFunctionName
 
-## Usage
+DevOps
+forge install chainaccelorg/foundry-devops --no-commit
 
-### Build
+make deploy ARGS="--network sepolia"
 
-```shell
-$ forge build
-```
+- Extra on Code
 
-### Test
+Breaking Down the Components:
 
-```shell
-$ forge test
-```
+json Variable:
 
-### Format
+This variable holds the base64-encoded JSON string representing the token's metadata.
+"data:application/json;base64,":
 
-```shell
-$ forge fmt
-```
+This prefix indicates that the data following it is a base64-encoded JSON object.
+data: specifies that the content is inline data.
+application/json denotes the MIME type of the data.
+base64 indicates that the data is base64-encoded.
+abi.encodePacked(...):
 
-### Gas Snapshots
+This function concatenates the prefix and the base64-encoded JSON string into a single byte array.
+string(...):
 
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Converts the concatenated byte array into a string.
